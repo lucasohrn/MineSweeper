@@ -37,14 +37,14 @@ namespace MineSweeper
                         {
                             int tempCol = col;
                             tempCol -= 1;
-                            
+
                             for (int j = 0; j < 3; j++)
                             {
                                 if (tempRow < 0 || tempCol < 0 || tempRow > 9 || tempCol > 9)
                                 {
                                 }
 
-                                else if(!board[tempRow, tempCol].BoobyTrapped)
+                                else if (!board[tempRow, tempCol].BoobyTrapped)
                                 {
                                     board[tempRow, tempCol].IncrementCloseMineCount();
                                 }
@@ -72,15 +72,15 @@ namespace MineSweeper
             if (board[row, col].TrySweep(GameOver))
             {
                 sweepedCount++;
-                if (board[row,col].Symbol == (char)Square.GameSymbol.SweepedZeroCloseMine)
+                if (board[row, col].Symbol == (char)Square.GameSymbol.SweepedZeroCloseMine)
                 {
                     int tempRow = row - 1;  // Tar värdet på raden där minan är och minskar med 1
-                    
+
                     for (int i = 0; i < 3; i++)  // For-lopp som loppar igenom raden
                     {
                         int tempCol = col;
                         tempCol -= 1;
-                            
+
                         for (int j = 0; j < 3; j++)
                         {
                             if (tempRow < 0 || tempCol < 0 || tempRow > 9 || tempCol > 9)
@@ -118,7 +118,7 @@ namespace MineSweeper
                 flagCount++;
                 return true;
             }
-            
+
             return false;
         }
 

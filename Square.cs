@@ -8,7 +8,7 @@ namespace MineSweeper
     struct Square
     {
         public enum GameSymbol
-        { 
+        {
             Flagged = 'F',
             NotSweeped = 'X',
             SweepedZeroCloseMine = '.'
@@ -54,7 +54,7 @@ namespace MineSweeper
         // Enbart läsbar egenskap som är symbolen som representerar rutan just nu 
         // om spelplanen skall ritas ut.
         public char Symbol => symbol;
-        
+
         // Enbart skrivbar egenskap som tilldelas true för alla rutor om spelaren 
         // röjer en minerad ruta 
         public bool GameOver
@@ -113,7 +113,7 @@ namespace MineSweeper
                 flagged = !flagged;
                 return true;
             }
-            
+
         }
 
         // Försök röja rutan. Returnerar false om ogiltigt drag, annars true.
@@ -124,7 +124,7 @@ namespace MineSweeper
                 GameOver = true;
             }
 
-            else if(!gameOver)
+            else if (!gameOver)
             {
                 if (!sweeped && !flagged && !boobyTrapped)
                 {
@@ -133,14 +133,14 @@ namespace MineSweeper
                     {
                         symbol = (char)Square.GameSymbol.SweepedZeroCloseMine;
                     }
-                
+
                     else
                     {
                         symbol = char.Parse(closeMineCount.ToString());
                     }
                     return true;
                 }
-                
+
                 else if (boobyTrapped)
                 {
                     //symbol = (char)Square.GameOverSymbol.ExplodedMine;

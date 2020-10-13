@@ -25,13 +25,13 @@ namespace MineSweeper
         public bool quit;
         public bool playerWon;
         public bool gameOver;
-        
+
         // Läs ett nytt kommando från användaren med giltig syntax och 
         // ett känt kommandotecken.
         static private string ReadCommand(string inmatning) // Stubbe
         {
             string val = ReturneraVal(inmatning);
-            return val; 
+            return val;
         }
 
         // Kör spelet efter initering. Metoden returnerar när spelet tar 
@@ -51,20 +51,20 @@ namespace MineSweeper
                     string inmatning = null;
 
                     board.Print();
-                
+
                     Console.Write("> ");
                     inmatning = Console.ReadLine();
                     inmatning = inmatning.ToUpper();
 
                     if (inmatning.Length == 4)
                     {
-                        val = ReadCommand(inmatning);
-
                         string temp = ReturneraRad(inmatning);
                         col = ReturneraColumn(inmatning);
-                        
+
                         Bokstäver bokstäver = (Bokstäver)Enum.Parse(typeof(Bokstäver), temp);
                         row = Convert.ToInt32(bokstäver);
+
+                        val = ReadCommand(inmatning);
 
                     }
 
@@ -72,7 +72,7 @@ namespace MineSweeper
                     {
                         quit = true;
                     }
-                
+
                     else
                     {
                         throw new Exception("SYNTAX ERROR");
@@ -90,7 +90,7 @@ namespace MineSweeper
 
                     if (gameOver)
                     {
-                        
+
                     }
 
                     else if (board.PlayerWon)
@@ -108,7 +108,7 @@ namespace MineSweeper
             }
         }
 
-        
+
 
         private static string ReturneraVal(string gissning)
         {
@@ -133,7 +133,7 @@ namespace MineSweeper
             {
                 throw new Exception("SYNTAX ERROR");
             }
-            
+
         }
 
         private static int ReturneraColumn(string gissning)
@@ -149,7 +149,7 @@ namespace MineSweeper
             {
                 throw new Exception("SYNTAX ERROR");
             }
-            
+
         }
     }
 }

@@ -10,8 +10,8 @@ namespace MineSweeper
             MineSweeper game = new MineSweeper();
 
             game.Run(board);
-            
-            
+
+
 
         }
     }
