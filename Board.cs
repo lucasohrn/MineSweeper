@@ -85,6 +85,12 @@ namespace MineSweeper
                         {
                             if (tempRow < 0 || tempCol < 0 || tempRow > 9 || tempCol > 9)
                             {
+
+                                /*
+                        0,0 1,0 2,0 3,0
+                        0,1 1,1 2,1
+                        0,2 1,2 2,2
+                        */
                             }
 
                             else
@@ -112,14 +118,29 @@ namespace MineSweeper
         // försök flaga, returnera false om ogiltigt drag, annars true
         public bool TryFlag(int row, int col)
         {
-            //board = new Square[10, 10];
-            if (board[row, col].TryFlag())
+            if (flagCount < 25)
             {
-                flagCount++;
-                return true;
+                if (board[row, col].TryFlag())
+                {
+                    flagCount++;
+                    return true;
+                }
+                else
+                {
+                    flagCount--;
+                }
+                return false;
             }
 
-            return false;
+            else if (flagCount == 25)
+            {
+                //Implementation för flagcount när den är 25
+            }
+
+            else
+            {
+                throw new Exception("not allowed");
+            }
         }
 
         // skriv ut spelplanen

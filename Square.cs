@@ -97,21 +97,22 @@ namespace MineSweeper
         {
             if (sweeped)
             {
-                Console.WriteLine("ILLEGAL COMMAND");
-                return false;
+                throw new Exception("not allowed");
             }
             else
             {
                 if (flagged)
                 {
                     symbol = (char)Square.GameSymbol.NotSweeped;
+                    flagged = !flagged;
+                    return false;
                 }
                 else
                 {
                     symbol = (char)Square.GameSymbol.Flagged;
+                    flagged = !flagged;
+                    return true;
                 }
-                flagged = !flagged;
-                return true;
             }
 
         }
@@ -148,6 +149,12 @@ namespace MineSweeper
                     GameOver = true;
                     return true;
                 }
+
+                else
+                {
+                    throw new Exception("not allowed");
+                }
+
             }
 
             else

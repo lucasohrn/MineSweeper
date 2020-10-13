@@ -46,7 +46,7 @@ namespace MineSweeper
         {
             if (row >= 0 && row < boobyTraps.GetLength(1) && column >= 0 && column < boobyTraps.GetLength(0))
             {
-                return boobyTraps[column, row];
+                return boobyTraps[row, column];
             }
 
             return false;

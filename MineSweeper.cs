@@ -68,14 +68,30 @@ namespace MineSweeper
 
                     }
 
-                    else if (inmatning == "Q")
+                    else if (inmatning.Length == 1)
                     {
-                        quit = true;
+                        if (inmatning == "Q")
+                        {
+                            quit = true;
+                        }
+                        else if (Regex.IsMatch(inmatning, @"^[A-Z]+$"))
+                        {
+                            throw new Exception("unknown command");
+                        }
+                        else
+                        {
+                            throw new Exception("syntax error");
+                        }
+                    }
+
+                    else if (inmatning.Length < 4 || inmatning.Length > 4)
+                    {
+                        throw new Exception("syntax error");
                     }
 
                     else
                     {
-                        throw new Exception("SYNTAX ERROR");
+                        throw new Exception("unknown command");
                     }
 
                     if (val == "R")
@@ -88,7 +104,7 @@ namespace MineSweeper
                         board.TryFlag(row, col);
                     }
 
-                    if (gameOver)
+                    else if (gameOver)
                     {
 
                     }
@@ -96,6 +112,12 @@ namespace MineSweeper
                     else if (board.PlayerWon)
                     {
                         playerWon = true;
+                    }
+
+                    else
+                    {
+                        if (!quit)
+                        throw new Exception("unknown command");
                     }
                 }
 
@@ -112,11 +134,20 @@ namespace MineSweeper
 
         private static string ReturneraVal(string gissning)
         {
-            char temp = gissning[0];
-            string val = Convert.ToString(temp);
-            val = val.ToUpper();
+            try
+            {
+                char temp = gissning[0];
+                string val = Convert.ToString(temp);
+                val = val.ToUpper();
 
-            return val;
+                return val;
+            }
+
+            catch
+            {
+                throw new Exception("unknown command");
+            }
+
         }
 
         private static string ReturneraRad(string gissning)
@@ -125,13 +156,13 @@ namespace MineSweeper
             string rad = Convert.ToString(temp);
             rad = rad.ToUpper();
 
-            if (Regex.IsMatch(rad, @"^[A-Z]+$"))
+            if (Regex.IsMatch(rad, @"^[A-J]+$"))
             {
                 return rad;
             }
             else
             {
-                throw new Exception("SYNTAX ERROR");
+                throw new Exception("syntax error");
             }
 
         }
@@ -147,7 +178,7 @@ namespace MineSweeper
             }
             catch
             {
-                throw new Exception("SYNTAX ERROR");
+                throw new Exception("syntax error");
             }
 
         }
