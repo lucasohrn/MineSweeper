@@ -73,7 +73,7 @@ namespace MineSweeper
                         symbol = (char)Square.GameOverSymbol.MisplacedFlag;
                     }
 
-                    if (!sweeped && boobyTrapped)
+                    if (!sweeped && boobyTrapped && !flagged)
                     {
                         symbol = (char)Square.GameOverSymbol.Mine;
                     }
@@ -114,54 +114,43 @@ namespace MineSweeper
                     return true;
                 }
             }
-
         }
 
         // Försök röja rutan. Returnerar false om ogiltigt drag, annars true.
-        public bool TrySweep(bool gameOver) // Stubbe
+        public bool TrySweep()
         {
-            if (gameOver)
+            if (!sweeped && !flagged && !boobyTrapped)
             {
-                GameOver = true;
-            }
-
-            else if (!gameOver)
-            {
-                if (!sweeped && !flagged && !boobyTrapped)
+                sweeped = true;
+                if (closeMineCount == 0)
                 {
-                    sweeped = true;
-                    if (closeMineCount == 0)
-                    {
-                        symbol = (char)Square.GameSymbol.SweepedZeroCloseMine;
-                    }
-
-                    else
-                    {
-                        symbol = char.Parse(closeMineCount.ToString());
-                    }
-                    return true;
-                }
-
-                else if (boobyTrapped)
-                {
-                    //symbol = (char)Square.GameOverSymbol.ExplodedMine;
-                    sweeped = true;
-                    GameOver = true;
-                    return true;
+                    symbol = (char)Square.GameSymbol.SweepedZeroCloseMine;
                 }
 
                 else
                 {
-                    throw new Exception("not allowed");
+                    symbol = char.Parse(closeMineCount.ToString());
                 }
+                return true;
+            }
 
+            else if (boobyTrapped && !flagged)
+            {
+                sweeped = true;
+                GameOver = true;
+                return false;
             }
 
             else
             {
-                return false;
+                throw new Exception("not allowed");
             }
+        }
 
+        public bool PrintGameOverBoard()
+        {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            GameOver = true;
             return true;
         }
     }

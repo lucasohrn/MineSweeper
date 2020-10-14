@@ -21,10 +21,8 @@ namespace MineSweeper
     // Typ för minröjspelet. 
     struct MineSweeper
     {
-        public Board board;
         public bool quit;
-        public bool playerWon;
-        public bool gameOver;
+        public bool gameIsOver;
 
         // Läs ett nytt kommando från användaren med giltig syntax och 
         // ett känt kommandotecken.
@@ -41,7 +39,7 @@ namespace MineSweeper
         // - Spelaren vann spelet genom att alla ej minerade rutor är röjda.
         public void Run(Board board)
         {
-            while (!(quit || playerWon || gameOver))
+            while (!(quit || gameIsOver))
             {
                 try
                 {
@@ -52,7 +50,7 @@ namespace MineSweeper
 
                     board.Print();
 
-                    Console.Write("> ");
+                    Console.Write("\n> ");
                     inmatning = Console.ReadLine();
                     inmatning = inmatning.ToUpper();
 
@@ -96,22 +94,13 @@ namespace MineSweeper
 
                     if (val == "R")
                     {
-                        board.TrySweep(row, col);
+                        if(!board.TrySweep(row, col))
+                            gameIsOver = true;
                     }
 
                     else if (val == "F")
                     {
                         board.TryFlag(row, col);
-                    }
-
-                    else if (gameOver)
-                    {
-
-                    }
-
-                    else if (board.PlayerWon)
-                    {
-                        playerWon = true;
                     }
 
                     else
