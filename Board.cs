@@ -85,12 +85,6 @@ namespace MineSweeper
                         {
                             if (tempRow < 0 || tempCol < 0 || tempRow > 9 || tempCol > 9)
                             {
-
-                                /*
-                        0,0 1,0 2,0 3,0
-                        0,1 1,1 2,1
-                        0,2 1,2 2,2
-                        */
                             }
 
                             else
@@ -129,12 +123,21 @@ namespace MineSweeper
                 {
                     flagCount--;
                 }
-                return false;
+                return true;
             }
 
             else if (flagCount == 25)
             {
-                //Implementation för flagcount när den är 25
+                if (board[row, col].Symbol == (char)Square.GameSymbol.Flagged)
+                {
+                    board[row, col].TryFlag();
+                    flagCount--;
+                }
+                else
+                {
+                    throw new Exception("not allowed");
+                }
+                return true;
             }
 
             else
