@@ -7,6 +7,7 @@ namespace MineSweeper
     // Typ för en ruta på spelplanen.
     struct Square
     {
+        // enum symboler för 
         public enum GameSymbol
         {
             Flagged = 'F',
@@ -100,23 +101,23 @@ namespace MineSweeper
         // Försök att flagga rutan. Returnerar false om ogiltigt drag, annars true.
         public bool TryFlag()
         {
-            if (sweeped)
+            if (sweeped)                                                    // OM rutan är sweeped
             {
-                throw new Exception("not allowed");
+                throw new Exception("not allowed");                             // Kastar nytt felmedellande
             }
-            else
+            else                                                            // ANNARS
             {
-                if (flagged)
+                if (flagged)                                                // OM rutan redan är flaggad
                 {
-                    symbol = (char)Square.GameSymbol.NotSweeped;
-                    flagged = !flagged;
-                    return false;
+                    symbol = (char)Square.GameSymbol.NotSweeped;                // Ändrar symbolen 'F' ut till 'X'
+                    flagged = !flagged;                                         // värdet bytes från flaggad till inte flaggad
+                    return false;                                               // returnerar false
                 }
-                else
+                else                                                        // ANNARS
                 {
-                    symbol = (char)Square.GameSymbol.Flagged;
-                    flagged = !flagged;
-                    return true;
+                    symbol = (char)Square.GameSymbol.Flagged;                   // Ändrar symbolen från 'X' till 'F'
+                    flagged = !flagged;                                         // Värdet byts
+                    return true;                                                // returnerar true
                 }
             }
         }
@@ -124,40 +125,32 @@ namespace MineSweeper
         // Försök röja rutan. Returnerar false om ogiltigt drag, annars true.
         public bool TrySweep()
         {
-            if (!sweeped && !flagged && !boobyTrapped)
+            if (!sweeped && !flagged && !boobyTrapped)                      // OM positionen inte är sweeped, flagged eller boobyTrapped
             {
-                sweeped = true;
-                if (closeMineCount == 0)
+                sweeped = true;                                                 // Rutans variabel sweeped blir true
+                if (closeMineCount == 0)                                        // OM closeMineCount är 0
                 {
-                    symbol = (char)Square.GameSymbol.SweepedZeroCloseMine;
+                    symbol = (char)Square.GameSymbol.SweepedZeroCloseMine;          // Rutans värde ändras till '.'
                 }
 
-                else
+                else                                                            // ANNARS
                 {
-                    symbol = char.Parse(closeMineCount.ToString());
+                    symbol = char.Parse(closeMineCount.ToString());                 // Med hjälp av Parse, förvandla symbol till sträng
                 }
-                return true;
+                return true;                                                    // Returnerar true
             }
 
-            else if (boobyTrapped && !flagged)
+            else if (boobyTrapped && !flagged)                              // ANNARS OM rutan är boobyTrapped och inte flaggad
             {
-                sweeped = true;
-                GameOver = true;
-                return false;
+                sweeped = true;                                                 // Sveper rutan på brädet
+                GameOver = true;                                                // GamerOver blir true som avslutar spelet med "Game Over" medelande
+                return false;                                                   // Returnera false
             }
 
-            else
+            else                                                            // ANNARS
             {
-                throw new Exception("not allowed");
+                throw new Exception("not allowed");                             // Kastar nytt felmedellande
             }
         }
-
-        public bool PrintGameOverBoard()
-        {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
-            GameOver = true;
-            return true;
-        }
-
     }
 }
