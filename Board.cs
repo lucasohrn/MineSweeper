@@ -77,8 +77,7 @@ namespace MineSweeper
                 Console.Write(row + " |");
                 for (int col = 0; col < 10; col++)
                 {
-                    board[col, row].PrintGameOverBoard();
-                    ChangeColor(col, row);
+                    board[col, row].GameOver = true;
                     Console.Write(" " + board[col, row].Symbol);
                     Console.ForegroundColor = ConsoleColor.Gray;
                 }
@@ -94,13 +93,13 @@ namespace MineSweeper
             if (board[row, col].TrySweep())
             {
                 sweepedCount++;
-                
+
                 if (sweepedCount == 90)
                 {
                     PlayerWon();
                     return false;
                 }
-                
+
                 else if (board[row, col].Symbol == (char)Square.GameSymbol.SweepedZeroCloseMine)
                 {
                     int tempRow = row - 1;  // Tar värdet på raden där minan är och minskar med 1
@@ -184,70 +183,11 @@ namespace MineSweeper
                 Console.Write(row + " |");
                 for (int col = 0; col < 10; col++)
                 {
-                    ChangeColor(col, row);
                     Console.Write(" " + board[col, row].Symbol);
-                    Console.ForegroundColor = ConsoleColor.Gray;
                 }
                 Console.WriteLine();
 
             }
-        }
-
-        public bool ChangeColor(int row, int col)
-        {
-            if (board[row, col].Symbol == (char)Square.GameSymbol.Flagged)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-            }
-            else if (board[row, col].Symbol == '1')
-            {
-                Console.ForegroundColor = ConsoleColor.Blue;
-            }
-            else if (board[row, col].Symbol == '2')
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-            }
-            else if (board[row, col].Symbol == '3')
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-            }
-            else if (board[row, col].Symbol == '4')
-            {
-                Console.ForegroundColor = ConsoleColor.Cyan;
-            }
-            else if (board[row, col].Symbol == '5')
-            {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-            }
-            else if (board[row, col].Symbol == '6')
-            {
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-            }
-            else if (board[row, col].Symbol == '7')
-            {
-                Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            }
-            else if (board[row, col].Symbol == '8')
-            {
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
-            }
-            else if (board[row, col].Symbol == (char)Square.GameOverSymbol.ExplodedMine)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-            }
-            else if (board[row, col].Symbol == (char)Square.GameOverSymbol.FlaggedMine)
-            {
-                Console.ForegroundColor = ConsoleColor.Magenta;
-            }
-            else if (board[row, col].Symbol == (char)Square.GameOverSymbol.Mine)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-            }
-            else if (board[row, col].Symbol == (char)Square.GameOverSymbol.MisplacedFlag)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            }
-            return true;
         }
     }
 }

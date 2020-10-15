@@ -6,6 +6,8 @@ namespace MineSweeper
     {
         static void Main(string[] args)
         {
+            
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             Board board = new Board(args);
             MineSweeper game = new MineSweeper();
 

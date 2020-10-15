@@ -82,6 +82,11 @@ namespace MineSweeper
                     {
                         symbol = (char)Square.GameOverSymbol.ExplodedMine;
                     }
+
+                    if (!sweeped && !boobyTrapped && !flagged)
+                    {
+                        TrySweep();
+                    }
                 }
             }
         }
@@ -153,5 +158,6 @@ namespace MineSweeper
             GameOver = true;
             return true;
         }
+
     }
 }

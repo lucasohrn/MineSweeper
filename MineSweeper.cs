@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace MineSweeper
 {
@@ -41,80 +42,86 @@ namespace MineSweeper
         {
             while (!(quit || gameIsOver))
             {
-                try
+                bool checkInput = true;
+                board.Print();
+
+                while (checkInput)
                 {
-                    int row = 0;
-                    int col = 0;
-                    string val = null;
-                    string inmatning = null;
-
-                    board.Print();
-
-                    Console.Write("\n> ");
-                    inmatning = Console.ReadLine();
-                    inmatning = inmatning.ToUpper();
-
-                    if (inmatning.Length == 4)
+                    try
                     {
-                        string temp = ReturneraRad(inmatning);
-                        col = ReturneraColumn(inmatning);
+                        int row = 0;
+                        int col = 0;
+                        string val = null;
+                        string inmatning = null;
 
-                        Bokstäver bokstäver = (Bokstäver)Enum.Parse(typeof(Bokstäver), temp);
-                        row = Convert.ToInt32(bokstäver);
 
-                        val = ReadCommand(inmatning);
 
-                    }
+                        Console.Write("\n> ");
+                        inmatning = Console.ReadLine();
+                        inmatning = inmatning.ToUpper();
 
-                    else if (inmatning.Length == 1)
-                    {
-                        if (inmatning == "Q")
+                        if (inmatning.Length == 4)
                         {
-                            quit = true;
+                            string temp = ReturneraRad(inmatning);
+                            col = ReturneraColumn(inmatning);
+
+                            Bokstäver bokstäver = (Bokstäver)Enum.Parse(typeof(Bokstäver), temp);
+                            row = Convert.ToInt32(bokstäver);
+
+                            val = ReadCommand(inmatning);
+
                         }
-                        else if (Regex.IsMatch(inmatning, @"^[A-Z]+$"))
+
+                        else if (inmatning.Length == 1)
                         {
-                            throw new Exception("unknown command");
+                            if (inmatning == "Q")
+                            {
+                                quit = true;
+                            }
+                            else if (Regex.IsMatch(inmatning, @"^[A-Z]+$"))
+                            {
+                                throw new Exception("unknown command");
+                            }
+                            else
+                            {
+                                throw new Exception("syntax error");
+                            }
                         }
-                        else
+
+                        else if (inmatning.Length < 4 || inmatning.Length > 4)
                         {
                             throw new Exception("syntax error");
                         }
+
+                        else
+                        {
+                            throw new Exception("unknown command");
+                        }
+
+                        if (val == "R")
+                        {
+                            if (!board.TrySweep(row, col))
+                                gameIsOver = true;
+                        }
+
+                        else if (val == "F")
+                        {
+                            board.TryFlag(row, col);
+                        }
+
+                        else
+                        {
+                            if (!quit)
+                                throw new Exception("unknown command");
+                        }
+
+                        checkInput = false;
                     }
 
-                    else if (inmatning.Length < 4 || inmatning.Length > 4)
+                    catch (Exception ex)
                     {
-                        throw new Exception("syntax error");
+                        Console.WriteLine("\n" + ex.Message);
                     }
-
-                    else
-                    {
-                        throw new Exception("unknown command");
-                    }
-
-                    if (val == "R")
-                    {
-                        if(!board.TrySweep(row, col))
-                            gameIsOver = true;
-                    }
-
-                    else if (val == "F")
-                    {
-                        board.TryFlag(row, col);
-                    }
-
-                    else
-                    {
-                        if (!quit)
-                        throw new Exception("unknown command");
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\n" + ex.Message + "\n");
-                    Console.ForegroundColor = ConsoleColor.Gray;
                 }
             }
         }
